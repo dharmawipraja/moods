@@ -4,11 +4,10 @@ import Home from '../Screens/HomeScreen';
 import Settings from '../Screens/SettingsScreen';
 import Statistics from '../Screens/StatisticsScreen';
 import Header from '../Components/Header/Header';
-import { Icons } from '../Assets';
+import { HomeIcon, PieChartIcon, GearIcon } from '../Assets';
 import { Colors } from '../Assets/Colors';
 import { StyleSheet } from 'react-native';
 
-const { HomeIcon, PieChartIcon, GearIcon } = Icons;
 const { BLACK, BLUE, WHITE } = Colors;
 
 const Tab = createBottomTabNavigator();
@@ -40,8 +39,7 @@ const BottomTab = () => {
       screenOptions={{
         tabBarStyle: styles.tabBar,
       }}
-      sceneContainerStyle={styles.sceneContainer}
-    >
+      sceneContainerStyle={styles.sceneContainer}>
       <Tab.Screen
         name="Home"
         component={Home}

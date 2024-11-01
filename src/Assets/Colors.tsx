@@ -2,4 +2,12 @@ export const Colors = {
   WHITE: '#FFFFFF',
   BLACK: '#000000',
   BLUE: '#0000FF',
+  GOLDEN_SUN: '#FFCF30',
+  LIGHT_CREAM: '#FFFAE4',
+  SKY_BLUE: '#7DE4EA',
+  SOFT_AQUA: '#E8FEFF',
+  BRIGHT_BLUE: '#4370F2',
+  PALE_BLUE: '#E9EFFF',
+  VIBRANT_RED: '#FF2727',
+  BLUSH_PINK: '#FFE0E0',
 };
