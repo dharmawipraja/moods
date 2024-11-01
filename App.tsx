@@ -12,11 +12,12 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 
 import BottomTab from './src/Navigation/RootNavigation';
+import { styles } from './App.styles';
 
 function App(): React.JSX.Element {
 
   return (
-    <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <NavigationContainer>
         <BottomTab />
       </NavigationContainer>
