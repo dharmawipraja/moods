@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
-import BottomTab from './src/navigation/RootNavigation';
+import BottomTab from './src/Navigation/RootNavigation';
 
 function App(): React.JSX.Element {
 
