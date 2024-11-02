@@ -22,6 +22,7 @@ type Type = MOOD_TYPE;
 type Props = {
   type: Type;
   title: string;
+  onPress: () => void;
 };
 type AdditionalStyles = Record<Type, ViewStyle>;
 type SetPress = Dispatch<SetStateAction<boolean>>;
@@ -83,11 +84,7 @@ const handlePressOut = (setIsPressed: SetPress) => () => {
   setIsPressed(false);
 };
 
-const handlePress = (type: Type) => () => {
-  console.log('🚀 ~ handlePress ~ type:', type);
-};
-
-const MoodCard = ({ type, title }: Props) => {
+const MoodCard = ({ type, title, onPress }: Props) => {
   const [isPressed, setIsPressed] = useState(false);
   const additionalStyles = getStylesByType(type, isPressed);
   const textColor = getTextColorByType(type);
@@ -97,7 +94,7 @@ const MoodCard = ({ type, title }: Props) => {
       style={[styles.container, additionalStyles]}
       onPressIn={handlePressIn(setIsPressed)}
       onPressOut={handlePressOut(setIsPressed)}
-      onPress={handlePress(type)}>
+      onPress={onPress}>
       {getIconByType(type)}
       <Typhography
         text={title}

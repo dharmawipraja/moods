@@ -11,3 +11,10 @@ export enum TEXT_VARIANT {
   SUBTITLE = 'SUBTITLE',
   REGULAR = 'REGULAR',
 }
+
+export const CHART_KEY = 'CHART';
+
+export enum CHART_TYPE {
+  PIE = 'PIE',
+  BAR = 'BAR',
+}

@@ -1,27 +1,34 @@
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import React from 'react';
-import { BarChart, PieChart } from "react-native-gifted-charts";
+import { BarChart, PieChart } from 'react-native-gifted-charts';
 import { Colors } from '../../Assets/Colors';
+import { useGetMoods } from '../../Hooks/useGetMoods';
+import { CHART_TYPE, MOOD_TYPE, TEXT_VARIANT } from '../../Constants';
+import Typhography from '../../Components/Typhography/Typhography';
+import Card from '../../Components/Card/Card';
+import { styles } from './StatisticsScreen.styles';
+import { useGetChartType } from '../../Hooks/useGetChartType';
 
-const {
-  WHITE,
-  GOLDEN_SUN,
-  SKY_BLUE,
-  BRIGHT_BLUE,
-  VIBRANT_RED
-} = Colors
+type MoodData = {
+  mood: string;
+  timestamp: string;
+};
+type Data = Record<string, number>;
 
-const renderPieChart = () => {
-  const data = [
-    {id: 'stress', value: 45, color: VIBRANT_RED},
-    {id: 'neutral', value: 10, color: SKY_BLUE},
-    {id: 'happy', value: 20, color: GOLDEN_SUN},
-    {id: 'sad', value: 25, color: BRIGHT_BLUE},
+const { WHITE, GOLDEN_SUN, SKY_BLUE, BRIGHT_BLUE, VIBRANT_RED } = Colors;
+const { HAPPY, NEUTRAL, SAD, STRESS } = MOOD_TYPE;
+
+const renderPieChart = (data: Data) => {
+  const pieData = [
+    { id: STRESS, value: data[STRESS], color: VIBRANT_RED },
+    { id: NEUTRAL, value: data[NEUTRAL], color: SKY_BLUE },
+    { id: HAPPY, value: data[HAPPY], color: GOLDEN_SUN },
+    { id: SAD, value: data[SAD], color: BRIGHT_BLUE },
   ];
 
   return (
     <PieChart
-      data={data}
+      data={pieData}
       strokeWidth={2}
       strokeColor={WHITE}
       radius={187 / 2}
@@ -29,12 +36,12 @@ const renderPieChart = () => {
   );
 };
 
-const renderBarChart = () => {
+const renderBarChart = (data: Data) => {
   const barData = [
-    {id: 'happy', value: 20, frontColor: GOLDEN_SUN},
-    {id: 'neutral', value: 10, frontColor: SKY_BLUE},
-    {id: 'sad', value: 25, frontColor: BRIGHT_BLUE},
-    {id: 'stress', value: 45, frontColor: VIBRANT_RED},
+    { id: HAPPY, value: data[HAPPY], frontColor: GOLDEN_SUN },
+    { id: NEUTRAL, value: data[NEUTRAL], frontColor: SKY_BLUE },
+    { id: SAD, value: data[SAD], frontColor: BRIGHT_BLUE },
+    { id: STRESS, value: data[STRESS], frontColor: VIBRANT_RED },
   ];
 
   return (
@@ -56,48 +63,88 @@ const renderBarChart = () => {
   );
 };
 
-const renderChart = (chartType: string) => (
-  <View style={styles.card}>
-    {
-      chartType === 'pie'
-        ? renderPieChart()
-        : renderBarChart()
-    }
-  </View>
-)
+const renderChart = (chartType: string, data: Data) => (
+  <Card>
+    <View style={styles.chartCard}>
+      {chartType === CHART_TYPE.PIE
+        ? renderPieChart(data)
+        : renderBarChart(data)}
+    </View>
+  </Card>
+);
 
-const Stats = () => {
-  const chartType = 'bar'
+const summarizeMoods = (data: MoodData[]): Data => {
+  const totalMoods = data.length;
+  const moodCounts = data.reduce((acc: Record<string, number>, { mood }) => {
+    acc[mood] = (acc[mood] || 0) + 1;
+    return acc;
+  }, {});
+
+  const moodPercentages: Record<string, number> = {};
+  for (const mood in moodCounts) {
+    moodPercentages[mood] = Math.round((moodCounts[mood] / totalMoods) * 100);
+  }
+
+  return moodPercentages;
+};
+
+const renderStatsCard = (data: Data) => {
+  const stats = [
+    {
+      title: 'Happy',
+      color: GOLDEN_SUN,
+      value: data[HAPPY],
+    },
+    {
+      title: 'Neutral',
+      color: SKY_BLUE,
+      value: data[NEUTRAL],
+    },
+    {
+      title: 'Sad',
+      color: BRIGHT_BLUE,
+      value: data[SAD],
+    },
+    {
+      title: 'Stress',
+      color: VIBRANT_RED,
+      value: data[STRESS],
+    },
+  ];
 
   return (
-    <View style={styles.container}>
-      {renderChart(chartType)}
+    <View style={styles.statsContainer}>
+      {stats.map(({ color, title, value }) => (
+        <Card key={title}>
+          <View style={styles.dataCard}>
+            <Typhography
+              color={color}
+              text={title}
+              variant={TEXT_VARIANT.SUBTITLE}
+            />
+            <Typhography text={`${value}%`} variant={TEXT_VARIANT.SUBTITLE} />
+          </View>
+        </Card>
+      ))}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  card: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 0.2,
-    borderColor: '#ffffff',
-    borderRadius: 4,
-    marginHorizontal: 16,
-    height: 235,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 1,
-      height: 1,
-    },
-    shadowOpacity: 0.4,
-    shadowRadius: 1,
-    elevation: 1,
-  },
-  barChart: { width: '100%', height: '100%', marginTop: 45 }
-});
+const Stats = () => {
+  const { chartType, loading: chartLoading } = useGetChartType();
+  const { loading, moodData } = useGetMoods();
+  const data = summarizeMoods(moodData);
+
+  if (loading || chartLoading) {
+    return;
+  }
+
+  return (
+    <View style={styles.container}>
+      {renderChart(chartType, data)}
+      {renderStatsCard(data)}
+    </View>
+  );
+};
 
 export default Stats;
