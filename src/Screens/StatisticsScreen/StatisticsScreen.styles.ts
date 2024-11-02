@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from 'react-native';
+import { Colors } from '../../Assets/Colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -13,7 +14,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   chartCard: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.WHITE,
     alignItems: 'center',
     justifyContent: 'center',
     height: 235,
@@ -31,7 +32,7 @@ export const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   dataCard: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.WHITE,
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: Dimensions.get('window').width * 0.44 - 2,
