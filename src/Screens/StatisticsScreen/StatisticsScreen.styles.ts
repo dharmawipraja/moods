@@ -7,6 +7,11 @@ export const styles = StyleSheet.create({
     marginHorizontal: 16,
     gap: 24,
   },
+  emptyDataContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   chartCard: {
     backgroundColor: 'white',
     alignItems: 'center',
@@ -17,7 +22,7 @@ export const styles = StyleSheet.create({
   barChart: {
     width: '100%',
     height: '100%',
-    marginTop: 45,
+    marginTop: '15%',
   },
   statsContainer: {
     flexDirection: 'row',

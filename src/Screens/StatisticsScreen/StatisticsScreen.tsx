@@ -48,7 +48,8 @@ const renderBarChart = (data: Data) => {
     <View style={styles.barChart}>
       <BarChart
         data={barData}
-        barBorderRadius={5}
+        barBorderTopLeftRadius={10}
+        barBorderTopRightRadius={10}
         barWidth={70}
         initialSpacing={20}
         spacing={0}
@@ -122,7 +123,7 @@ const renderStatsCard = (data: Data) => {
               text={title}
               variant={TEXT_VARIANT.SUBTITLE}
             />
-            <Typhography text={`${value}%`} variant={TEXT_VARIANT.SUBTITLE} />
+            <Typhography text={`${value}%`} />
           </View>
         </Card>
       ))}
@@ -137,6 +138,17 @@ const Stats = () => {
 
   if (loading || chartLoading) {
     return;
+  }
+
+  if (moodData.length === 0) {
+    return (
+      <View style={styles.emptyDataContainer}>
+        <Typhography
+          text="Data empty, choose your mood first"
+          variant={TEXT_VARIANT.TITLE}
+        />
+      </View>
+    );
   }
 
   return (

@@ -37,6 +37,7 @@ const BottomTab = () => {
   return (
     <Tab.Navigator
       screenOptions={{
+        tabBarLabelStyle: styles.tabBarLabel,
         tabBarStyle: styles.tabBar,
       }}
       sceneContainerStyle={styles.sceneContainer}>
@@ -77,6 +78,14 @@ const BottomTab = () => {
 export default BottomTab;
 
 const styles = StyleSheet.create({
-  tabBar: { paddingTop: 15 },
-  sceneContainer: { backgroundColor: WHITE },
+  tabBar: {
+    paddingTop: 15,
+  },
+  tabBarLabel: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 12,
+  },
+  sceneContainer: {
+    backgroundColor: WHITE,
+  },
 });

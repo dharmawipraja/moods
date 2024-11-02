@@ -17,12 +17,16 @@ export const useGetMoods = () => {
       try {
         const keys = await getAllStorageKeys();
 
-        if (!keys) {return;}
+        if (!keys) {
+          return;
+        }
 
         const moodKeys = keys.filter((key) => key.startsWith('mood_'));
         const moodEntries = await getAllStorageData(moodKeys);
 
-        if (!moodEntries) {return;}
+        if (!moodEntries) {
+          return;
+        }
 
         const moods = moodEntries.map(
           ([_, value]) => value && JSON.parse(value),
