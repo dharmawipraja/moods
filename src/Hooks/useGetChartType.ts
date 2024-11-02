@@ -12,7 +12,6 @@ export const useGetChartType = () => {
     const fetchChartType = async () => {
       try {
         const type = await getStorageData(CHART_KEY);
-        console.log('🚀 ~ fetchChartType ~ type:', type);
 
         if (!type) {
           return;

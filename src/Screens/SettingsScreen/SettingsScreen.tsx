@@ -1,12 +1,17 @@
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { CHART_KEY, CHART_TYPE, TEXT_VARIANT } from '../../Constants';
 import Typhography from '../../Components/Typhography/Typhography';
 import { Colors } from '../../Assets/Colors';
 import { saveStorageData } from '../../Utils/Storage.utils';
+import { useGetChartType } from '../../Hooks/useGetChartType';
 
 const { PIE, BAR } = CHART_TYPE;
 const { TITLE, SUBTITLE } = TEXT_VARIANT;
+
+const handleSelect = (type: CHART_TYPE, setSelectedChart: any) => () => {
+  setSelectedChart(type);
+};
 
 const renderChartSelector = (selectedChart: string, setSelectedChart: any) => {
   return (
@@ -14,7 +19,7 @@ const renderChartSelector = (selectedChart: string, setSelectedChart: any) => {
       <Typhography text="Default Chart Type" variant={TITLE} />
       <TouchableOpacity
         style={styles.radioContainer}
-        onPress={() => setSelectedChart(PIE)}>
+        onPress={handleSelect(PIE, setSelectedChart)}>
         <View style={styles.radioCircle}>
           {selectedChart === PIE && <View style={styles.selectedCircle} />}
         </View>
@@ -22,7 +27,7 @@ const renderChartSelector = (selectedChart: string, setSelectedChart: any) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.radioContainer}
-        onPress={() => setSelectedChart(BAR)}>
+        onPress={handleSelect(BAR, setSelectedChart)}>
         <View style={styles.radioCircle}>
           {selectedChart === BAR && <View style={styles.selectedCircle} />}
         </View>
@@ -41,7 +46,16 @@ const onSave = (selectedChart: CHART_TYPE) => async () => {
 };
 
 const Settings = () => {
-  const [selectedChart, setSelectedChart] = useState(PIE);
+  const { loading, chartType } = useGetChartType();
+  const [selectedChart, setSelectedChart] = useState(chartType);
+
+  useEffect(() => {
+    setSelectedChart(chartType);
+  }, [loading]);
+
+  if (loading) {
+    return;
+  }
 
   return (
     <View style={styles.container}>

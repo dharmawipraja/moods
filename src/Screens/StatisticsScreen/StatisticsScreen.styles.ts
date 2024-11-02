@@ -39,4 +39,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 4,
   },
+  topLabel: {
+    height: 40,
+    width: 20,
+  },
 });

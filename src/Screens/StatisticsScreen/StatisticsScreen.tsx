@@ -8,6 +8,7 @@ import Typhography from '../../Components/Typhography/Typhography';
 import Card from '../../Components/Card/Card';
 import { styles } from './StatisticsScreen.styles';
 import { useGetChartType } from '../../Hooks/useGetChartType';
+import { HappyIcon, NeutralIcon, SadIcon, StressIcon } from '../../Assets';
 
 type MoodData = {
   mood: string;
@@ -38,10 +39,46 @@ const renderPieChart = (data: Data) => {
 
 const renderBarChart = (data: Data) => {
   const barData = [
-    { id: HAPPY, value: data[HAPPY], frontColor: GOLDEN_SUN },
-    { id: NEUTRAL, value: data[NEUTRAL], frontColor: SKY_BLUE },
-    { id: SAD, value: data[SAD], frontColor: BRIGHT_BLUE },
-    { id: STRESS, value: data[STRESS], frontColor: VIBRANT_RED },
+    {
+      id: HAPPY,
+      value: data[HAPPY],
+      frontColor: GOLDEN_SUN,
+      topLabelComponent: () => (
+        <View style={styles.topLabel}>
+          <HappyIcon viewBox="0 0 35 35" height="100%" width="100%" />
+        </View>
+      ),
+    },
+    {
+      id: NEUTRAL,
+      value: data[NEUTRAL],
+      frontColor: SKY_BLUE,
+      topLabelComponent: () => (
+        <View style={styles.topLabel}>
+          <NeutralIcon viewBox="0 0 35 35" height="100%" width="100%" />
+        </View>
+      ),
+    },
+    {
+      id: SAD,
+      value: data[SAD],
+      frontColor: BRIGHT_BLUE,
+      topLabelComponent: () => (
+        <View style={styles.topLabel}>
+          <SadIcon viewBox="0 0 35 35" height="100%" width="100%" />
+        </View>
+      ),
+    },
+    {
+      id: STRESS,
+      value: data[STRESS],
+      frontColor: VIBRANT_RED,
+      topLabelComponent: () => (
+        <View style={styles.topLabel}>
+          <StressIcon viewBox="0 0 35 35" height="100%" width="100%" />
+        </View>
+      ),
+    },
   ];
 
   return (
