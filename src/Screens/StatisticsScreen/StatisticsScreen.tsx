@@ -1,4 +1,4 @@
-import { View, Text, Dimensions } from 'react-native';
+import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import React from 'react';
 import { BarChart, PieChart } from "react-native-gifted-charts";
 import { Colors } from '../../Assets/Colors';
@@ -20,13 +20,12 @@ const renderPieChart = () => {
   ];
 
   return (
-    <View style={{ alignItems: 'center', width: '100%', backgroundColor: 'green' }}>
-      <PieChart
-        data={data}
-        strokeWidth={2}
-        strokeColor={WHITE}
-      />
-    </View>
+    <PieChart
+      data={data}
+      strokeWidth={2}
+      strokeColor={WHITE}
+      radius={187 / 2}
+    />
   );
 };
 
@@ -39,7 +38,7 @@ const renderBarChart = () => {
   ];
 
   return (
-    <View style={{ alignItems: 'center', width: '100%', backgroundColor: 'green' }}>
+    <View style={styles.barChart}>
       <BarChart
         data={barData}
         barBorderRadius={5}
@@ -57,13 +56,48 @@ const renderBarChart = () => {
   );
 };
 
+const renderChart = (chartType: string) => (
+  <View style={styles.card}>
+    {
+      chartType === 'pie'
+        ? renderPieChart()
+        : renderBarChart()
+    }
+  </View>
+)
+
 const Stats = () => {
+  const chartType = 'bar'
+
   return (
-    <View style={{ alignItems: 'center', gap: 10, paddingHorizontal: 16 }}>
-      {renderPieChart()}
-      {renderBarChart()}
+    <View style={styles.container}>
+      {renderChart(chartType)}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  card: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0.2,
+    borderColor: '#ffffff',
+    borderRadius: 4,
+    marginHorizontal: 16,
+    height: 235,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 1,
+    elevation: 1,
+  },
+  barChart: { width: '100%', height: '100%', marginTop: 45 }
+});
 
 export default Stats;
