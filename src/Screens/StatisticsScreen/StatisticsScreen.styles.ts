@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     borderRadius: 4,
   },
   barChart: {
-    width: '100%',
+    width: Dimensions.get('window').width * 0.9,
     height: '100%',
     marginTop: '15%',
   },

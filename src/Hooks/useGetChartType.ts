@@ -33,5 +33,6 @@ export const useGetChartType = () => {
   return {
     chartType,
     loading,
+    isFocused,
   };
 };

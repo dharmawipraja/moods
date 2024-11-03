@@ -46,12 +46,12 @@ const onSave = (selectedChart: CHART_TYPE) => async () => {
 };
 
 const Settings = () => {
-  const { loading, chartType } = useGetChartType();
+  const { loading, chartType, isFocused } = useGetChartType();
   const [selectedChart, setSelectedChart] = useState(chartType);
 
   useEffect(() => {
     setSelectedChart(chartType);
-  }, [loading]);
+  }, [loading, isFocused, chartType]);
 
   if (loading) {
     return;

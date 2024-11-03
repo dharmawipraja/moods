@@ -21,10 +21,10 @@ const { HAPPY, NEUTRAL, SAD, STRESS } = MOOD_TYPE;
 
 const renderPieChart = (data: Data) => {
   const pieData = [
-    { id: STRESS, value: data[STRESS], color: VIBRANT_RED },
-    { id: NEUTRAL, value: data[NEUTRAL], color: SKY_BLUE },
-    { id: HAPPY, value: data[HAPPY], color: GOLDEN_SUN },
-    { id: SAD, value: data[SAD], color: BRIGHT_BLUE },
+    { id: STRESS, value: data[STRESS] ?? 0, color: VIBRANT_RED },
+    { id: NEUTRAL, value: data[NEUTRAL] ?? 0, color: SKY_BLUE },
+    { id: HAPPY, value: data[HAPPY] ?? 0, color: GOLDEN_SUN },
+    { id: SAD, value: data[SAD] ?? 0, color: BRIGHT_BLUE },
   ];
 
   return (
@@ -41,7 +41,7 @@ const renderBarChart = (data: Data) => {
   const barData = [
     {
       id: HAPPY,
-      value: data[HAPPY],
+      value: data[HAPPY] ?? 0,
       frontColor: GOLDEN_SUN,
       topLabelComponent: () => (
         <View style={styles.topLabel}>
@@ -51,7 +51,7 @@ const renderBarChart = (data: Data) => {
     },
     {
       id: NEUTRAL,
-      value: data[NEUTRAL],
+      value: data[NEUTRAL] ?? 0,
       frontColor: SKY_BLUE,
       topLabelComponent: () => (
         <View style={styles.topLabel}>
@@ -61,7 +61,7 @@ const renderBarChart = (data: Data) => {
     },
     {
       id: SAD,
-      value: data[SAD],
+      value: data[SAD] ?? 0,
       frontColor: BRIGHT_BLUE,
       topLabelComponent: () => (
         <View style={styles.topLabel}>
@@ -71,7 +71,7 @@ const renderBarChart = (data: Data) => {
     },
     {
       id: STRESS,
-      value: data[STRESS],
+      value: data[STRESS] ?? 0,
       frontColor: VIBRANT_RED,
       topLabelComponent: () => (
         <View style={styles.topLabel}>
@@ -160,7 +160,7 @@ const renderStatsCard = (data: Data) => {
               text={title}
               variant={TEXT_VARIANT.SUBTITLE}
             />
-            <Typhography text={`${value}%`} />
+            <Typhography text={`${value ?? 0}%`} />
           </View>
         </Card>
       ))}
